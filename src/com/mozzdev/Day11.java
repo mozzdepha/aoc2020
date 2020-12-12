@@ -69,9 +69,6 @@ public class Day11 {
         String current = previous;
         int round=1;
         while (true) {
-            if (round==3) {
-                System.out.println("round 3");
-            }
             inSeatMap = applyRules2(inSeatMap);
             String newMap = dump(inSeatMap);
             System.out.println(newMap);
