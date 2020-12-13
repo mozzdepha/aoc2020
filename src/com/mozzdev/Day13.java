@@ -4,6 +4,7 @@ import java.io.*;
 import java.util.*;
 
 public class Day13 {
+    private Bus highest;
     private List<String> list;
     public static void main(String[] args) {
         new Day13().challenge2();
@@ -47,7 +48,6 @@ public class Day13 {
         List<Integer> busses = parseBusses(list.get(1));
         Map<Integer, Integer> remainders = new HashMap<Integer, Integer>();
         for (Integer bus : busses) {
-//            remainders.put(bus, target % bus);
             int wait = findWait(target, bus);
             System.out.println("Bus: " + bus + "; remainder: " + wait);
             if (wait < minWait) {
@@ -82,36 +82,43 @@ public class Day13 {
         return output;
     }
 
+
     public void challenge2() {
-        List<Bus> busses = generateBusses(list.get(1));
-        Collections.sort(busses);
-        System.out.println(busses);
-        Bus baselineBus = busses.get(0);
-        int x=1;
-        boolean stillLooking=true;
-        while (stillLooking) {
-            long baseline = baselineBus.getId() * x;
-            // now check if the other busses align
-            for (int y=1; y<busses.size(); y++) {
-                Bus nextBus = busses.get(y);
-                long targetPosition = baseline-busses.get(y-1).getOffset();
-                if (targetPosition % nextBus.getId() != 0) {
-                    
-                }
-            }
-            x++;
+        List<Integer> busNumbers = generateBusNumbers();
+        System.out.println(busNumbers);
+        int countUnits = Collections.max(busNumbers);
+        int indexOfMax = busNumbers.indexOf(countUnits);
+        long pass=1l;
+        boolean stillSearching = true;
+        while (stillSearching) {
+            // if all busses are divisible by their relative position, we have a winner
+            stillSearching = isIncompatible(pass*countUnits, busNumbers, indexOfMax);
+            pass++;
         }
+        System.out.println("Done");
+
     }
 
-    private List<Bus> generateBusses(String busString) {
-        String[] chars = busString.split(",");
-        List<Bus> output = new ArrayList<Bus>();
-        for (int x=0; x< chars.length; x++) {
-            if (!chars[x].equals("x")) {
-                output.add(new Bus (Integer.parseInt(chars[x]), x));
+    private boolean isIncompatible(long baseline, List<Integer> busNumbers, int indexOfMax) {
+        for (int x=0; x<busNumbers.size(); x++) {
+            if (busNumbers.get(x) != -1) {
+                int offset = x - indexOfMax;
+                long targetPosition = baseline + offset;
+                if (targetPosition % busNumbers.get(x) != 0) {
+                    return true;
+                }
             }
+        }
+        System.out.println(baseline - indexOfMax);
+        return false;
+    }
+
+    private List<Integer> generateBusNumbers() {
+        List<Integer> output = new ArrayList<Integer>();
+        String[] parsed = list.get(1).split(",");
+        for (int x=0; x<parsed.length;x++) {
+            output.add(parsed[x].equals("x") ? -1 : Integer.parseInt(parsed[x]));
         }
         return output;
     }
-
 }
