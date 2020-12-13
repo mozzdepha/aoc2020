@@ -88,11 +88,16 @@ public class Day13 {
         System.out.println(busses);
         Bus baselineBus = busses.get(0);
         int x=1;
-        while (true) {
+        boolean stillLooking=true;
+        while (stillLooking) {
             long baseline = baselineBus.getId() * x;
             // now check if the other busses align
-            for (int y=1; y<busses.size(): y++) {
+            for (int y=1; y<busses.size(); y++) {
                 Bus nextBus = busses.get(y);
+                long targetPosition = baseline-busses.get(y-1).getOffset();
+                if (targetPosition % nextBus.getId() != 0) {
+                    
+                }
             }
             x++;
         }
