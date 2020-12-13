@@ -1,15 +1,12 @@
 package com.mozzdev;
 
 import java.io.*;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class Day13 {
     private List<String> list;
     public static void main(String[] args) {
-        new Day13().challenge1();
+        new Day13().challenge2();
     }
 
     public Day13() {
@@ -84,4 +81,32 @@ public class Day13 {
         }
         return output;
     }
+
+    public void challenge2() {
+        List<Bus> busses = generateBusses(list.get(1));
+        Collections.sort(busses);
+        System.out.println(busses);
+        Bus baselineBus = busses.get(0);
+        int x=1;
+        while (true) {
+            long baseline = baselineBus.getId() * x;
+            // now check if the other busses align
+            for (int y=1; y<busses.size(): y++) {
+                Bus nextBus = busses.get(y);
+            }
+            x++;
+        }
+    }
+
+    private List<Bus> generateBusses(String busString) {
+        String[] chars = busString.split(",");
+        List<Bus> output = new ArrayList<Bus>();
+        for (int x=0; x< chars.length; x++) {
+            if (!chars[x].equals("x")) {
+                output.add(new Bus (Integer.parseInt(chars[x]), x));
+            }
+        }
+        return output;
+    }
+
 }
