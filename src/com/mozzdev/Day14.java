@@ -57,7 +57,10 @@ public class Day14 {
         parseSwitches();
         results = new HashMap<Long, Long>();
         for (int x = 0; x < switches.size(); x++) {
-            results.put((long)switches.get(x).getPosition(), switches.get(x).evaluateV2(results));
+            List<Long> memsToUpdate = switches.get(x).evaluateV2(results);
+            for (Long memToUpdate: memsToUpdate) {
+                results.put(memToUpdate, switches.get(x).getValue());
+            }
         }
         long runningTotal = 0l;
         for (Long sum:results.values()) {
@@ -82,7 +85,6 @@ public class Day14 {
     }
 
     private MemSwitch parseSwitch(String input, String mask) {
-        //mem[8] = 11
         int position = Integer.parseInt(input.substring(4, input.indexOf("]")));
         long value = Long.parseLong(input.substring(input.indexOf(" ") +3));
         return new MemSwitch(mask, position, value);

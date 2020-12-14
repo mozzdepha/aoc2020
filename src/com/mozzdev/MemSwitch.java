@@ -1,6 +1,8 @@
 package com.mozzdev;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class MemSwitch {
@@ -55,7 +57,7 @@ public class MemSwitch {
     }
 
 
-    public long evaluateV2(Map<Long, Long> results) {
+    public List<Long> evaluateV2(Map<Long, Long> results) {
         char[] bits = ("0000" + Long.toBinaryString( (long)getPosition() | 0x100000000L ).substring(1)).toCharArray();
         for (int x=0; x<getMask().length(); x++) {
             switch (getMask().charAt(x)) {
@@ -69,9 +71,30 @@ public class MemSwitch {
                     bits[x] = '1';
                     break;
             }
+            System.out.println("Done " + x + " of " + getMask().length());
         }
-        long result = Long.parseLong(new String(bits), 2);
-        return result;
+
+        List<String> locations = new ArrayList<String>();
+        locations.add(new String(bits));
+        for (int x=0; x<bits.length;x++) {
+            // for each 'X', replace each entry in locations with 2 option, a 1 and a 0 replacing the X
+            if (bits[x] == 'X') {
+                List<String> tmpLocations = new ArrayList<String>();
+                for (String current : locations) {
+                    char[] swapper = current.toCharArray();
+                    swapper[x] ='0';
+                    tmpLocations.add(new String(swapper));
+                    swapper[x] ='1';
+                    tmpLocations.add(new String(swapper));
+                    locations = tmpLocations;
+                }
+            }
+        }
+        List<Long> locationLongs = new ArrayList<Long>();
+        for (String locationString: locations) {
+            locationLongs.add(Long.parseLong(new String(locationString), 2));
+        }
+        return locationLongs;
     }
 
 }
