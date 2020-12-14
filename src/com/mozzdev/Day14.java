@@ -6,9 +6,9 @@ import java.util.*;
 public class Day14 {
     private List<String> list;
     private List<MemSwitch> switches;
-    private Map<Integer, Long> results;
+    private Map<Long, Long> results;
     public static void main(String[] args) {
-        new Day14().challenge1();
+        new Day14().challenge2();
     }
 
     public Day14() {
@@ -42,9 +42,9 @@ public class Day14 {
 
     public void challenge1() {
         parseSwitches();
-        results = new HashMap<Integer, Long>();
+        results = new HashMap<Long, Long>();
         for (int x = 0; x < switches.size(); x++) {
-            results.put(switches.get(x).getPosition(), switches.get(x).evaluate());
+            results.put((long)switches.get(x).getPosition(), switches.get(x).evaluate());
         }
         long runningTotal = 0l;
         for (Long sum:results.values()) {
@@ -53,6 +53,18 @@ public class Day14 {
         System.out.println(runningTotal);
     }
 
+    public void challenge2() {
+        parseSwitches();
+        results = new HashMap<Long, Long>();
+        for (int x = 0; x < switches.size(); x++) {
+            results.put((long)switches.get(x).getPosition(), switches.get(x).evaluateV2(results));
+        }
+        long runningTotal = 0l;
+        for (Long sum:results.values()) {
+            runningTotal+=sum;
+        }
+        System.out.println(runningTotal);
+    }
     private void parseSwitches() {
         switches = new ArrayList<MemSwitch>();
         String currentMask=parseMask(list.get(0));
