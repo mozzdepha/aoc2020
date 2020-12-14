@@ -4,53 +4,37 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Day1 {
+public class Day1 extends AocDay {
+
+
     private List<Integer> numbers;
 
     public static void main(String[] args) {
-//        new Day1().challenge1();
-        new Day1().challenge2();
+        new Day1().run();
     }
 
-    public Day1() {
-        initializeNumbers();
-    }
-
-    private void initializeNumbers() {
-        List<Integer> list = new ArrayList<Integer>();
-        File file = new File("inputs.txt");
-        BufferedReader reader = null;
-        try {
-            reader = new BufferedReader(new FileReader(file));
-            String text = null;
-
-            while ((text = reader.readLine()) != null) {
-                list.add(Integer.parseInt(text));
-            }
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } finally {
-            try {
-                if (reader != null) {
-                    reader.close();
-                }
-            } catch (IOException e) {
-            }
-        }
-        numbers = list;
+    public String getInputFile() {
+        return "resources/inputs.txt";
     }
 
     public void challenge1() {
+        initNumbers();
         for (Integer num: numbers) {
             checkMatchFor2020(num);
         }
     }
 
     public void challenge2() {
+        initNumbers();
         for (Integer num: numbers) {
             checkMatchFor20202(num);
+        }
+    }
+
+    private void initNumbers() {
+        numbers = new ArrayList<Integer>();
+        for (String numString: list) {
+            numbers.add(Integer.parseInt(numString));
         }
     }
 
@@ -60,7 +44,7 @@ public class Day1 {
         for (Integer candidate : numbers) {
             if (target == candidate.intValue()) {
                 System.out.println("Found match! " + num + " matches with " + candidate.intValue());
-                System.out.println("Challenge 1: " + (num*candidate.intValue()));
+                System.out.println("Result: " + (num*candidate.intValue()));
             }
         }
     }

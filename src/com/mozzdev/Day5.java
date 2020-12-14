@@ -6,47 +6,17 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class Day5 {
+public class Day5 extends AocDay {
     private char[][] map;
 
-    private List<String> list;
-
     public static void main(String[] args) {
-        new Day5().challenge1();
-//        new Day5().challenge2();
+        new Day5().run();
     }
 
-    public Day5() {
-        initializeNumbers();
+    @Override
+    public String getInputFile() {
+        return "resources/inputs5.txt";
     }
-
-    private void initializeNumbers() {
-        list = new ArrayList<String>();
-        File file = new File("inputs5.txt");
-        BufferedReader reader = null;
-        try {
-            reader = new BufferedReader(new FileReader(file));
-            String text = null;
-
-            while ((text = reader.readLine()) != null) {
-                list.add(text);
-            }
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } finally {
-            try {
-                if (reader != null) {
-                    reader.close();
-                }
-            } catch (IOException e) {
-            }
-        }
-
-
-    }
-
 
     public void challenge1() {
         int x=0;

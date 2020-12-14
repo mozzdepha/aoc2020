@@ -4,43 +4,19 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Day3 {
+public class Day3 extends AocDay {
     private char[][] map;
 
-    private List<String> list;
 
     public static void main(String[] args) {
-//        new Day3().challenge1();
-        new Day3().challenge2();
+        new Day3().run();
     }
 
-    public Day3() {
-        initializeNumbers();
+    public String getInputFile() {
+        return "resources/inputs3.txt";
     }
 
-    private void initializeNumbers() {
-        list = new ArrayList<String>();
-        File file = new File("inputs3.txt");
-        BufferedReader reader = null;
-        try {
-            reader = new BufferedReader(new FileReader(file));
-            String text = null;
-
-            while ((text = reader.readLine()) != null) {
-                list.add(text);
-            }
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } finally {
-            try {
-                if (reader != null) {
-                    reader.close();
-                }
-            } catch (IOException e) {
-            }
-        }
+    private void initializeMap() {
         int depth = list.size();
         int width = list.get(0).length();
         char[][] chars = new char[depth][width];
@@ -52,11 +28,11 @@ public class Day3 {
             }
         }
         map = chars;
-
     }
 
 
     public void challenge1() {
+        initializeMap();
         int treeCount=0;
         int xPosition=0;
         int yPosition=0;
@@ -85,6 +61,7 @@ public class Day3 {
     }
 
     public void challenge2() {
+        initializeMap();
         long pass1 = treeCount(1, 1);
         long pass2 = treeCount(3, 1);
         long pass3 = treeCount(5, 1);

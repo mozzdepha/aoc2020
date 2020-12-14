@@ -3,44 +3,18 @@ package com.mozzdev;
 import java.io.*;
 import java.util.*;
 
-public class Day13 {
-    private Bus highest;
-    private List<String> list;
-    public static void main(String[] args) {
-        new Day13().challenge2();
-    }
-
-    public Day13() {
-        initialize();
-    }
-
-    private void initialize() {
-        list = new ArrayList<String>();
-        File file = new File("inputs13.txt");
-        BufferedReader reader = null;
-        try {
-            reader = new BufferedReader(new FileReader(file));
-            String text = null;
-
-            while ((text = reader.readLine()) != null) {
-                list.add(text);
-            }
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } finally {
-            try {
-                if (reader != null) {
-                    reader.close();
-                }
-            } catch (IOException e) {
-            }
-        }
-    }
-
-
+public class Day13 extends AocDay {
     private int target;
+
+    public static void main(String[] args) {
+        new Day13().run();
+    }
+
+    @Override
+    public String getInputFile() {
+        return "resources/inputs13.txt";
+    }
+
     public void challenge1() {
         target = Integer.parseInt(list.get(0));
         int minWait = 10000000;

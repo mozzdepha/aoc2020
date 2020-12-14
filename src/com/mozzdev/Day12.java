@@ -4,46 +4,18 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Day12 {
-    private int depth;
-    private long validPerms=1l;
+public class Day12 extends AocDay {
     private int wpN;
     private int wpE;
-    private List<String> list;
     private char heading;
     public static void main(String[] args) {
-        new Day12().challenge2();
+        new Day12().run();
     }
 
-    public Day12() {
-        initialize();
+    @Override
+    public String getInputFile() {
+        return "resources/inputs12.txt";
     }
-
-    private void initialize() {
-        list = new ArrayList<String>();
-        File file = new File("inputs12.txt");
-        BufferedReader reader = null;
-        try {
-            reader = new BufferedReader(new FileReader(file));
-            String text = null;
-
-            while ((text = reader.readLine()) != null) {
-                list.add(text);
-            }
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } finally {
-            try {
-                if (reader != null) {
-                    reader.close();
-                }
-            } catch (IOException e) {
-            }
-        }
-    }
-
 
     public void challenge1() {
         int x=0;

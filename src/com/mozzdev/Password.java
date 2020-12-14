@@ -1,8 +1,6 @@
 package com.mozzdev;
 
 public class Password {
-
-
     int min;
     int max;
     char letter;
@@ -22,7 +20,6 @@ public class Password {
         this.min = Integer.parseInt(minMax[0]);
         this.max = Integer.parseInt(minMax[1]);
         this.letter = words[1].charAt(0);
-        System.out.println(this);
     }
 
     public char getLetter() {
@@ -57,9 +54,6 @@ public class Password {
     }
 
     public boolean isValid2() {
-        if (getPassword().equals("dddc")) {
-            System.out.println("test");
-        }
         try {
             boolean minTest = getPassword().charAt(getMin() - 1) == getLetter();
             boolean maxTest = getPassword().charAt(getMax() - 1) == getLetter();

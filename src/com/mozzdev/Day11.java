@@ -3,58 +3,30 @@ package com.mozzdev;
 import java.io.*;
 import java.util.*;
 
-public class Day11 {
+public class Day11 extends AocDay  {
     private int depth;
     private long validPerms=1l;
-    private List<String> list;
 
     public static void main(String[] args) {
-        new Day11().challenge2();
+        new Day11().run();
     }
 
-    public Day11() {
-        initialize();
+    @Override
+    public String getInputFile() {
+        return "resources/inputs11.txt";
     }
-
-    private void initialize() {
-        list = new ArrayList<String>();
-        File file = new File("inputs11.txt");
-        BufferedReader reader = null;
-        try {
-            reader = new BufferedReader(new FileReader(file));
-            String text = null;
-
-            while ((text = reader.readLine()) != null) {
-                list.add(text);
-            }
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } finally {
-            try {
-                if (reader != null) {
-                    reader.close();
-                }
-            } catch (IOException e) {
-            }
-        }
-    }
-
 
     public void challenge1() {
         char[][] inSeatMap = convertToArrays(list);
         String previous = dump(inSeatMap);
-        System.out.println(previous);
-        String current = previous;
-        while (true) {
+        boolean stillSearching = true;
+        while (stillSearching) {
             inSeatMap = applyRules(inSeatMap);
             String newMap = dump(inSeatMap);
-            System.out.println(newMap);
             if (newMap.equals(previous)) {
                 // no more movements - end
                 System.out.println("Last map equals this map. Total seats: " + (newMap.length() - newMap.replace("#", "").length()));
-                System.exit(0);
+                stillSearching = false;
             } else {
                 // next iteration
                 previous = newMap;
@@ -65,17 +37,16 @@ public class Day11 {
     public void challenge2() {
         char[][] inSeatMap = convertToArrays(list);
         String previous = dump(inSeatMap);
-        System.out.println(previous);
         String current = previous;
         int round=1;
-        while (true) {
+        boolean stillSearching = true;
+        while (stillSearching) {
             inSeatMap = applyRules2(inSeatMap);
             String newMap = dump(inSeatMap);
-            System.out.println(newMap);
             if (newMap.equals(previous)) {
                 // no more movements - end
                 System.out.println("Last map equals this map. Total seats: " + (newMap.length() - newMap.replace("#", "").length()));
-                System.exit(0);
+                stillSearching = false;
             } else {
                 // next iteration
                 previous = newMap;

@@ -3,49 +3,24 @@ package com.mozzdev;
 import java.io.*;
 import java.util.*;
 
-public class Day7 {
+public class Day7 extends AocDay {
     private char[][] map;
     private int matches=0;
-    private List<String> list;
     private Map<String, Bag> bags;
 
     public static void main(String[] args) {
-        new Day7().challenge2();
-//        new Day5().challenge2();
+        new Day7().run();
     }
 
     public Day7() {
-        initializeNumbers();
-    }
-
-    private void initializeNumbers() {
+        super();
         bags = new HashMap<String, Bag>();
-        list = new ArrayList<String>();
-        File file = new File("inputs7.txt");
-        BufferedReader reader = null;
-        try {
-            reader = new BufferedReader(new FileReader(file));
-            String text = null;
-
-            while ((text = reader.readLine()) != null) {
-                list.add(text);
-            }
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } finally {
-            try {
-                if (reader != null) {
-                    reader.close();
-                }
-            } catch (IOException e) {
-            }
-        }
-
-
     }
 
+    @Override
+    public String getInputFile() {
+        return "resources/inputs7.txt";
+    }
 
     public void challenge1() {
         int x=0;

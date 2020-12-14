@@ -3,59 +3,29 @@ package com.mozzdev;
 import java.io.*;
 import java.util.*;
 
-public class Day10 {
-    private int depth;
+public class Day10 extends AocDay {
     private long validPerms=1l;
-    private List<Integer> list;
-    private List<Integer> cypher;
-    private int accumulator;
+    private List<Integer> listOfIntegers;
     private Map<String, Long> cache;
-    Set<Integer> processed;
 
     public static void main(String[] args) {
-        new Day10().challenge2();
+        new Day10().run();
     }
 
-    public Day10() {
-        initialize();
+    @Override
+    public String getInputFile() {
+        return "resources/inputs10.txt";
     }
-
-    private void initialize() {
-        list = new ArrayList<Integer>();
-        File file = new File("inputs10.txt");
-        BufferedReader reader = null;
-        try {
-            reader = new BufferedReader(new FileReader(file));
-            String text = null;
-
-            while ((text = reader.readLine()) != null) {
-                list.add(Integer.parseInt(text));
-            }
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } finally {
-            try {
-                if (reader != null) {
-                    reader.close();
-                }
-            } catch (IOException e) {
-            }
-        }
-
-
-    }
-
 
     public void challenge1() {
-        Collections.sort(list);
+        initializeInts();
+        Collections.sort(listOfIntegers);
         int x=0;
         int count1s =0;
         int count3s =0;
         int previous =0;
-        while (x<list.size()) {
-            int current = list.get(x);
+        while (x< listOfIntegers.size()) {
+            int current = listOfIntegers.get(x);
             int diff = current - previous;
             if (diff ==1) {
                 count1s++;
@@ -71,16 +41,24 @@ public class Day10 {
     }
 
     public void challenge2() {
+        initializeInts();
         cache = new HashMap<String, Long>();
-        Collections.sort(list);
-        System.out.println(list);
-        list.add(0, 0);
+        Collections.sort(listOfIntegers);
+        System.out.println(listOfIntegers);
+        listOfIntegers.add(0, 0);
         long result =1; // start with 1 as the full list is a valid permutation
-        for (int x=1; x<list.size()-1; x++) {
-            validPerms+=countValidPerms(x, list);
+        for (int x = 1; x< listOfIntegers.size()-1; x++) {
+            validPerms+=countValidPerms(x, listOfIntegers);
         }
         System.out.println("Complete: " + validPerms);
 
+    }
+
+    private void initializeInts() {
+        listOfIntegers = new ArrayList<Integer>();
+        for (String input: list) {
+            listOfIntegers.add(Integer.parseInt(input));
+        }
     }
 
     private long countValidPerms(int itemToRemove, List<Integer> testList) {
