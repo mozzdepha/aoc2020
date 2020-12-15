@@ -20,12 +20,12 @@ public class Day15 extends AocDay {
         freqMap = new HashMap<Long, Long>();
         longs = new ArrayList<Long>();
         String[] numbers = list.get(0).split(",");
-        for (int x=0; x<numbers.length; x++) {
+        for (int x=0; x<numbers.length-1; x++) {
             long current = Long.parseLong(numbers[x]);
             longs.add(current);
             freqMap.put(current, (long)x);
-            last = current;
         }
+        last = Long.parseLong(numbers[numbers.length-1]);
 //        Collections.reverse(longs);
 
     }
@@ -50,19 +50,20 @@ public class Day15 extends AocDay {
     public void challenge1() {
         initializeLongs();
         for (long x=longs.size(); x<2020; x++) {
+
             Long lastOccurence = freqMap.get(last);
-            if (lastOccurence == x-1) {
-                // last iteration was the first occurence of that number
-                freqMap.put(0l, x);
-                last =0l;
-            } else {
+            freqMap.put(last, x);
+
+            if (lastOccurence == null) {
+                last =0;
+            } else{
                 last = x-lastOccurence;
-                freqMap.put(last, x);
             }
+
         }
 
 //        Collections.reverse(longs);
-        System.out.println(longs.get(2019));
+        System.out.println(last);
     }
 
 //    public void challenge2() {
