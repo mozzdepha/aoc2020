@@ -5,8 +5,9 @@ import java.util.*;
 
 public class Day15 extends AocDay {
     private List<Long> longs;
-    private Map<Long, Long> freqMap;
+    private Map<Long, Long> pointerMap;
     private long last;
+    private long oneBeforeLast;
     public static void main(String[] args) {
         new Day15().run();
     }
@@ -17,75 +18,34 @@ public class Day15 extends AocDay {
     }
 
     private void initializeLongs() {
-        freqMap = new HashMap<Long, Long>();
+        pointerMap = new HashMap<Long, Long>();
         longs = new ArrayList<Long>();
         String[] numbers = list.get(0).split(",");
         for (int x=0; x<numbers.length-1; x++) {
             long current = Long.parseLong(numbers[x]);
             longs.add(current);
-            freqMap.put(current, (long)x);
+            pointerMap.put(current, (long)x);
         }
         last = Long.parseLong(numbers[numbers.length-1]);
-//        Collections.reverse(longs);
-
     }
-
-//    public void challenge1() {
-//        initializeLongs();
-//        for (int x=0; x<2017; x++) {
-//            long firstElement = longs.get(0);
-//            int frequency = Collections.frequency(longs, firstElement);
-//            if (frequency == 1) {
-//                longs.add(0, 0l);
-//            } else {
-//                List<Long> longsWithoutFirst = longs.subList(1, longs.size());
-//                int indexOfSecond = longsWithoutFirst.indexOf(firstElement);
-//                longs.add(0, (long)indexOfSecond+1);
-//            }
-//        }
-//        Collections.reverse(longs);
-//        System.out.println(longs.get(2019));
-//    }
 
     public void challenge1() {
-        initializeLongs();
-        for (long x=longs.size(); x<2020; x++) {
-
-            Long lastOccurence = freqMap.get(last);
-            freqMap.put(last, x);
-
-            if (lastOccurence == null) {
-                last =0;
-            } else{
-                last = x-lastOccurence;
-            }
-
-        }
-
-//        Collections.reverse(longs);
-        System.out.println(last);
+        runChallenge(2020l);
     }
 
-//    public void challenge2() {
-//        initializeLongs();
-//        Map<Long,Long> freqMap = new HashMap<Long, Long>();
-//
-//        for (long x=0; x<30000000; x++) {
-//            long firstElement = longs.get(0);
-//            long frequency = freqMap.get(firstElement) == null ? 0l : freqMap.get(firstElement);
-//            if (frequency == 0l) {
-//                longs.add(0, 0l);
-//                freqMap.put(0l, frequency+1);
-//            } else {
-//                List<Long> longsWithoutFirst = longs.subList(1, longs.size());
-//                int indexOfSecond = longsWithoutFirst.indexOf(firstElement);
-//                long elementToAdd = (long)indexOfSecond+1;
-//                longs.add(0, elementToAdd);
-//                long currentFrequency = freqMap.get(elementToAdd) == null ? 0l : freqMap.get(elementToAdd);
-//                freqMap.put(elementToAdd, currentFrequency+1);
-//            }
-//        }
-//        Collections.reverse(longs);
-//        System.out.println(longs.get(30000000-1));
-//    }
+    public void challenge2() {
+        runChallenge(30000000l);
+    }
+
+    private void runChallenge(long iterations) {
+        initializeLongs();
+        for (long x=longs.size(); x<iterations; x++) {
+            Long lastOccurence = pointerMap.get(last);
+            pointerMap.put(last, x);
+            oneBeforeLast = last;
+            last = (lastOccurence == null) ? 0 : x-lastOccurence;
+        }
+        System.out.println(oneBeforeLast);
+    }
+
 }
