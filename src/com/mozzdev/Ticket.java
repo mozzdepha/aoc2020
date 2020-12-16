@@ -1,5 +1,6 @@
 package com.mozzdev;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -7,6 +8,7 @@ public class Ticket {
     private String field;
     private int startRange1, endRange1, startRange2, endRange2;
     private List<Integer> validValues;
+    private List<Integer> possibleSequences;
 
     public Ticket(String input) {
         int indexOfColon = input.indexOf(":");
@@ -38,6 +40,7 @@ public class Ticket {
         for (int x=startRange2; x<=endRange2; x++) {
             validValues.add(x);
         }
+        possibleSequences = new ArrayList<Integer>();
     }
 
     public String getField() {
@@ -64,6 +67,16 @@ public class Ticket {
         return validValues;
     }
 
+    public void initializePossibleSequences(Integer size) {
+        for (int x=0; x<size; x++) {
+            possibleSequences.add(x);
+        }
+    }
+
+    public boolean isValid(int value) {
+        return (startRange1 <= value && endRange1 >= value) || (startRange2 <= value && endRange2 >= value);
+    }
+
     @Override
     public String toString() {
         return "Ticket{" +
@@ -72,6 +85,21 @@ public class Ticket {
                 ", endRange1=" + endRange1 +
                 ", startRange2=" + startRange2 +
                 ", endRange2=" + endRange2 +
+                ", possibleSequences=" + possibleSequences +
                 '}';
+    }
+
+    public List<Integer> getPossibleSequences() {
+        return possibleSequences;
+    }
+
+    public void removePossibleSequence(int sequence) {
+        if (possibleSequences.contains(sequence)) {
+            possibleSequences.remove(possibleSequences.indexOf(sequence));
+        }
+    }
+
+    public boolean isSolved() {
+        return possibleSequences.size() == 1;
     }
 }

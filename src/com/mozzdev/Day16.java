@@ -74,9 +74,20 @@ public class Day16 extends AocDay {
         initializeTickets();
         Set<Integer> allValidValues = getAllValidValues();
         stripInvalidTicketsFromNearby(allValidValues);
-        // determine field order here
-        
-        System.out.println(nearbyTicketValues);
+        determineFieldOrder();
+
+        List<Integer> positionsToCalculate = new ArrayList<Integer>();
+        for (Ticket t: tickets) {
+            System.out.println(t.getField() + " - " + t.getPossibleSequences().get(0) + " size: " + t.getPossibleSequences().size());
+            if (t.getField().startsWith("departure")) {
+                positionsToCalculate.add(myTicket[t.getPossibleSequences().get(0)]);
+            }
+        }
+        long result = 1l;
+        for (Integer i : positionsToCalculate) {
+            result *= i;
+        }
+        System.out.println(result);
     }
 
     private void stripInvalidTicketsFromNearby(Set<Integer> validValues) {
@@ -90,5 +101,37 @@ public class Day16 extends AocDay {
         nearbyTicketValues=result;
     }
 
+    private void determineFieldOrder() {
+        int numTickets = tickets.size();
+        for (Ticket ticket: tickets) {
+            ticket.initializePossibleSequences(numTickets);
+        }
+        Set<Integer> solvedSet = new HashSet<Integer>();
+        while (solvedSet.size() < numTickets) {
+            for (int x = 0; x < numTickets; x++) {
+                Ticket t = tickets.get(x);
+                if (!t.isSolved()) {
+                    for (int y=0; y< numTickets; y++) {
+                        // for each value of y, check for a failure in that position in any nearby ticket
+                        for (int z=0; z<nearbyTicketValues.size();z++) {
+                            if (!t.isValid(nearbyTicketValues.get(z)[y])) {
+                                t.removePossibleSequence(y);
+                            }
+                        }
+                    }
+                }
+                if (t.isSolved()) {
+                    int solvedSequence = t.getPossibleSequences().get(0);
+                    solvedSet.add(solvedSequence);
+                    // Now removed the value of x from all unsolved tickets
+                    for (Ticket t2: tickets) {
+                        if (!t2.isSolved() ) {
+                            t2.getPossibleSequences().removeAll(solvedSet);
+                        }
+                    }
+                }
+            }
+       }
+    }
 
 }
