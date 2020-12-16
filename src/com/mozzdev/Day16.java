@@ -5,6 +5,7 @@ import java.util.*;
 public class Day16 extends AocDay {
     private List<Ticket> tickets;
     private List<Integer[]> nearbyTicketValues;
+    private Integer[] myTicket;
 
     public static void main(String[] args) {
         new Day16().run();
@@ -20,7 +21,7 @@ public class Day16 extends AocDay {
         Set<Integer> allValidValues = getAllValidValues();
         int invalidValues = 0;
         for (int x=0; x<nearbyTicketValues.size(); x++) {
-            invalidValues += getInvalidValues(nearbyTicketValues.get(x), allValidValues);
+            invalidValues += getSumOfInvalidValues(nearbyTicketValues.get(x), allValidValues);
         }
         System.out.println(invalidValues);
     }
@@ -41,9 +42,16 @@ public class Day16 extends AocDay {
             }
             nearbyTicketValues.add(output);
         }
+
+        String[] myTicketString = list.get(indexOfYourTicket).split(",");
+        myTicket = new Integer[myTicketString.length];
+        for (int x=0; x<myTicketString.length; x++) {
+            myTicket[x] = Integer.parseInt(myTicketString[x]);
+        }
+
     }
 
-    private int getInvalidValues(Integer[] ticketValues, Set<Integer> validValues) {
+    private int getSumOfInvalidValues(Integer[] ticketValues, Set<Integer> validValues) {
         int output = 0;
         for (int x=0; x<ticketValues.length; x++) {
             if (!validValues.contains(ticketValues[x])) {
@@ -61,6 +69,26 @@ public class Day16 extends AocDay {
         return output;
     }
 
+
+    public void challenge2() {
+        initializeTickets();
+        Set<Integer> allValidValues = getAllValidValues();
+        stripInvalidTicketsFromNearby(allValidValues);
+        // determine field order here
+        
+        System.out.println(nearbyTicketValues);
+    }
+
+    private void stripInvalidTicketsFromNearby(Set<Integer> validValues) {
+        List<Integer[]> result = new ArrayList<Integer[]>();
+        for (int x=0; x< nearbyTicketValues.size(); x++) {
+            Integer[] current = nearbyTicketValues.get(x);
+            if (validValues.containsAll(Arrays.asList(current))) {
+                result.add(current);
+            }
+        }
+        nearbyTicketValues=result;
+    }
 
 
 }
