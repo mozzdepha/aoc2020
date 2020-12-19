@@ -6,6 +6,7 @@ public class Day19 extends AocDay {
 
     private Map<Integer, List<Object>> rules;
     private List<String> checked;
+    private String input;
 
     public static void main(String[] args) {
         new Day19().run();
@@ -19,8 +20,9 @@ public class Day19 extends AocDay {
     public void challenge1() {
         parseInputs();
         int matches=0;
-        for (String input: checked) {
-            if (checkRule(input, 0)) {
+        for (String current: checked) {
+            input = current;
+            if (checkRule(0) && input.isEmpty()) {
                 matches++;
             }
         }
@@ -29,11 +31,47 @@ public class Day19 extends AocDay {
 
     /**
      * Return true if the input string passes all the rules
-     * @param input
-     * @param startRule
+
+     */
+    private boolean checkRule(int rule) {
+        List<Object> subRules = rules.get(rule);
+        String unmodifiedString = input;
+        for (int x=0; x<subRules.size(); x++) {
+            List<Object> subSubRules = (List<Object>)subRules.get(x);
+            if (allValid(subSubRules)) {
+                return true;
+            } else {
+                input = unmodifiedString;
+            }
+        }
+        return false;
+    }
+
+    /**
+     * Return true if all rules are valid
+     * @param rules
      * @return
      */
-    private boolean checkRule(String input, int startRule) {
+    private boolean allValid(List<Object> subRules) {
+        try {
+            for (Object nextRule : subRules) {
+                String nrString = (String) nextRule;
+                if (nrString.startsWith("\"")) {
+                    if (input.charAt(0) == nrString.replaceAll("\"", "").charAt(0)) {
+                        input = input.substring(1);
+                        return true;
+                    } else {
+                        return false;
+                    }
+                } else if (!checkRule(Integer.parseInt((String) nextRule))) {
+                    return false;
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+
         return true;
     }
 
