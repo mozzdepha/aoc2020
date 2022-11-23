@@ -1,4 +1,4 @@
-package com.mozzdev.adventofcode.common;
+package com.mozzdev.adventofcode.aoc2020;
 
 import java.util.ArrayList;
 import java.util.List;

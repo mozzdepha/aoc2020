@@ -1,7 +1,5 @@
 package com.mozzdev.adventofcode.aoc2020;
 
-import com.mozzdev.adventofcode.common.Calculation;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Stack;
