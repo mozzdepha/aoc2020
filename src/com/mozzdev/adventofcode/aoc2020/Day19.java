@@ -49,8 +49,6 @@ public class Day19 extends AocDay2020 {
 
     /**
      * Return true if all rules are valid
-     * @param rules
-     * @return
      */
     private boolean allValid(List<Object> subRules) {
         try {
