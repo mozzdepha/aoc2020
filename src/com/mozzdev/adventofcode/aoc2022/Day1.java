@@ -3,6 +3,7 @@ package com.mozzdev.adventofcode.aoc2022;
 import com.mozzdev.adventofcode.aoc2020.AocDay2020;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class Day1 extends AocDay2022 {
@@ -20,22 +21,29 @@ public class Day1 extends AocDay2022 {
 
     public void challenge1() {
         initNumbers();
-        for (Integer num: numbers) {
-            checkMatchFor2020(num);
-        }
+        Collections.sort(numbers);
+        System.out.println(numbers.get(numbers.size()-1));
     }
 
     public void challenge2() {
         initNumbers();
-        for (Integer num: numbers) {
-            checkMatchFor20202(num);
-        }
+        Collections.sort(numbers);
+        int totalCalories = numbers.get(numbers.size()-1);
+        totalCalories += numbers.get(numbers.size()-2);
+        totalCalories += numbers.get(numbers.size()-3);
+        System.out.println(totalCalories);
     }
 
     private void initNumbers() {
         numbers = new ArrayList<Integer>();
+        int currentTotal = 0;
         for (String numString: list) {
-            numbers.add(Integer.parseInt(numString));
+            if (numString.equals("")) {
+                numbers.add(currentTotal);
+                currentTotal = 0;
+            } else {
+                currentTotal += Integer.parseInt(numString);
+            }
         }
     }
 
