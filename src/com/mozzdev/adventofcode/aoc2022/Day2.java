@@ -17,7 +17,7 @@ public class Day2 extends AocDay2022 {
     }
 
     public void challenge1() {
-        initRounds();
+        init();
         int totalScore = 0;
         int roundCount = 0;
         for (Round round : rounds) {
@@ -28,7 +28,7 @@ public class Day2 extends AocDay2022 {
     }
 
     public void challenge2() {
-        initRounds();
+        init();
         int totalScore = 0;
         int roundCount = 0;
         for (Round round : rounds) {
@@ -38,7 +38,7 @@ public class Day2 extends AocDay2022 {
         System.out.println(totalScore);
     }
 
-    private void initRounds() {
+    private void init() {
         rounds = new ArrayList<Round>();
         for (String numString: list) {
             rounds.add(new Round(numString));
