@@ -4,10 +4,8 @@ import java.util.*;
 
 public class Day5 extends AocDay2022 {
 
-
     Map<Integer, List> stacks;
     List<Move> moves;
-
 
     public static void main(String[] args) {
         new Day5().run();
@@ -36,7 +34,8 @@ public class Day5 extends AocDay2022 {
             List currentList = stacks.get(x+1);
             sb.append(currentList.get(currentList.size()-1));
         }
-        System.out.println(sb.toString());    }
+        System.out.println(sb.toString());
+    }
 
     private void processMoves1() {
         for (Move move : moves) {
@@ -76,10 +75,6 @@ public class Day5 extends AocDay2022 {
 
     private void initStacks() {
         stacks = new HashMap<Integer, List>();
-//        addToStacks(1, "ZN");
-//        addToStacks(2, "MCD");
-//        addToStacks(3, "P");
-
         addToStacks(1, "HBVWNMLP");
         addToStacks(2, "MQH");
         addToStacks(3, "NDBGFQMP");
